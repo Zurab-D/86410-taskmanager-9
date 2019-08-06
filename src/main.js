@@ -196,7 +196,6 @@ const getTaskCardHTML = function (cardText, cardDate, cardTime, classList) {
 };
 
 // get Task Edit Form markup
-/* have commented just not to annoy Travis
 const getTaskEditFormHTML = function (cardText, cardDate) {
   return `<article class="card card--edit card--yellow card--repeat">
     <form class="card__form" method="get">
@@ -466,21 +465,18 @@ const getTaskEditFormHTML = function (cardText, cardDate) {
     </form>
   </article>`;
 };
-*/
 
 // get Load More button markup
-/* have commented just not to annoy Travis
 const getLoadMoreHTML = function () {
   return `<button class="load-more" type="button">load more</button>`;
 };
-*/
 
 const renderElem = function (elem, htmlCode) {
   elem.innerHTML = elem.innerHTML + htmlCode;
 };
 
 const main = function () {
-  const mainElem = document.querySelector(`main.main`);
+  const mainElem = document.querySelector(`.main`);
   const mainControl = mainElem.querySelector(`.main__control`);
 
   // menu
@@ -502,26 +498,30 @@ const main = function () {
   const boardTasks = document.createElement(`div`);
   boardTasks.className = `board__tasks`;
 
-  // add card black
-  let cardText = `Example default task with default color.`;
-  let cardDate = `23 SEPTEMBER`;
-  let cardTime = `11:15 PM`;
-  let classList = `card--black`;
-  renderElem(boardTasks, getTaskCardHTML(cardText, cardDate, cardTime, classList));
+  const tsks = [
+    {
+      cardText: `Example default task with default color.`,
+      cardDate: `23 SEPTEMBER`,
+      cardTime: `11:15 PM`,
+      classList: `card--black`
+    },
+    {
+      cardText: `Example default task with custom color.`,
+      cardDate: `23 SEPTEMBER`,
+      cardTime: `11:15 PM`,
+      classList: `card--blue`
+    },
+    {
+      cardText: `Example default task with custom color and without date.`,
+      cardDate: ``,
+      cardTime: ``,
+      classList: `card--yellow`
+    },
+  ];
 
-  // add card blue
-  cardText = `Example default task with custom color.`;
-  cardDate = `23 SEPTEMBER`;
-  cardTime = `11:15 PM`;
-  classList = `card--blue`;
-  renderElem(boardTasks, getTaskCardHTML(cardText, cardDate, cardTime, classList));
-
-  // add card yellow
-  cardText = `Example default task with custom color and without date.`;
-  cardDate = ``;
-  cardTime = ``;
-  classList = `card--yellow`;
-  renderElem(boardTasks, getTaskCardHTML(cardText, cardDate, cardTime, classList));
+  for (const task of tsks) {
+    renderElem(boardTasks, getTaskCardHTML(task.cardText, task.cardDate, task.cardTime, task.classList));
+  };
 
   boardSection.append(boardTasks);
 };
