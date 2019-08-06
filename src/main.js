@@ -1,38 +1,38 @@
 // get Menu markup
 const getMenuHTML = function () {
-    return `<section class="control__btn-wrap">
-      <input
-        type="radio"
-        name="control"
-        id="control__new-task"
-        class="control__input visually-hidden"
-      />
-      <label for="control__new-task" class="control__label control__label--new-task"
-        >+ ADD NEW TASK</label
-      >
-      <input
-        type="radio"
-        name="control"
-        id="control__task"
-        class="control__input visually-hidden"
-        checked
-      />
-      <label for="control__task" class="control__label">TASKS</label>
-      <input
-        type="radio"
-        name="control"
-        id="control__statistic"
-        class="control__input visually-hidden"
-      />
-      <label for="control__statistic" class="control__label"
-        >STATISTICS</label
-      >
-    </section>`;
+  return `<section class="control__btn-wrap">
+    <input
+      type="radio"
+      name="control"
+      id="control__new-task"
+      class="control__input visually-hidden"
+    />
+    <label for="control__new-task" class="control__label control__label--new-task"
+      >+ ADD NEW TASK</label
+    >
+    <input
+      type="radio"
+      name="control"
+      id="control__task"
+      class="control__input visually-hidden"
+      checked
+    />
+    <label for="control__task" class="control__label">TASKS</label>
+    <input
+      type="radio"
+      name="control"
+      id="control__statistic"
+      class="control__input visually-hidden"
+    />
+    <label for="control__statistic" class="control__label"
+      >STATISTICS</label
+    >
+  </section>`;
 };
 
 // get Serch markup
 const getSearchHTML = function () {
-    return `<section class="main__search search container">
+  return `<section class="main__search search container">
     <input
       type="text"
       id="search__input"
@@ -45,7 +45,7 @@ const getSearchHTML = function () {
 
 // get Filters markup
 const getFiltersHTML = function () {
-    return `<section class="main__filter filter container">
+  return `<section class="main__filter filter container">
     <input
       type="radio"
       id="filter__all"
@@ -112,21 +112,21 @@ const getFiltersHTML = function () {
     <label for="filter__archive" class="filter__label"
       >Archive <span class="filter__archive-count">115</span></label
     >
-  </section>`
+  </section>`;
 };
 
 // get sort list markup
 const getSortByHTML = function () {
-    return `<div class="board__filter-list">
+  return `<div class="board__filter-list">
     <a href="#" class="board__filter">SORT BY DEFAULT</a>
     <a href="#" class="board__filter">SORT BY DATE up</a>
     <a href="#" class="board__filter">SORT BY DATE down</a>
   </div>`;
-}
+};
 
 // get Task Card markup
 const getTaskCardHTML = function (cardText, cardDate, cardTime, classList) {
-    return `<article class="card ${classList}">
+  return `<article class="card ${classList}">
     <div class="card__form">
       <div class="card__inner">
         <div class="card__control">
@@ -190,12 +190,12 @@ const getTaskCardHTML = function (cardText, cardDate, cardTime, classList) {
         </div>
       </div>
     </div>
-  </article>`
+  </article>`;
 };
 
 // get Task Edit Form markup
 const getTaskEditFormHTML = function (cardText, cardDate) {
-    return `<article class="card card--edit card--yellow card--repeat">
+  return `<article class="card card--edit card--yellow card--repeat">
     <form class="card__form" method="get">
       <div class="card__inner">
         <div class="card__control">
@@ -466,62 +466,58 @@ const getTaskEditFormHTML = function (cardText, cardDate) {
 
 // get Load More button markup
 const getLoadMoreHTML = function () {
-    return `<button class="load-more" type="button">load more</button>`
+  return `<button class="load-more" type="button">load more</button>`;
 };
 
 const renderElem = function (elem, htmlCode) {
-    // console.log(elem.innerHTML);
-    elem.innerHTML = elem.innerHTML + htmlCode;
-    // console.log(elem.innerHTML);
+  elem.innerHTML = elem.innerHTML + htmlCode;
 };
 
 const main = function () {
-    console.log(`hi!`);
-    
-    const main = document.querySelector(`main.main`);
-    mainControl = main.querySelector(`.main__control`);
+  const main = document.querySelector(`main.main`);
+  mainControl = main.querySelector(`.main__control`);
 
-    // menu
-    renderElem(mainControl, getMenuHTML());
-    // search
-    renderElem(main, getSearchHTML());
-    // filters
-    renderElem(main, getFiltersHTML());
+  // menu
+  renderElem(mainControl, getMenuHTML());
+  // search
+  renderElem(main, getSearchHTML());
+  // filters
+  renderElem(main, getFiltersHTML());
 
-    // create board section
-    const boardSection = document.createElement(`section`);
-    boardSection.className = `board container`;
-    main.append(boardSection);
+  // create board section
+  const boardSection = document.createElement(`section`);
+  boardSection.className = `board container`;
+  main.append(boardSection);
 
-    // sort list
-    renderElem(boardSection, getSortByHTML());
-    
-    // create board__tasks
-    const boardTasks = document.createElement(`div`);
-    boardTasks.className = `board__tasks`;
+  // sort list
+  renderElem(boardSection, getSortByHTML());
 
-    // add card black
-    let cardText = `Example default task with default color.`; 
-    let cardDate = `23 SEPTEMBER`;
-    let cardTime = `11:15 PM`;
-    let classList = `card--black`
-    renderElem(boardTasks, getTaskCardHTML(cardText, cardDate, cardTime, classList));
+  // create board__tasks
+  const boardTasks = document.createElement(`div`);
+  boardTasks.className = `board__tasks`;
 
-    // add card blue
-    cardText = `Example default task with custom color.`; 
-    cardDate = `23 SEPTEMBER`;
-    cardTime = `11:15 PM`;
-    classList = `card--blue`
-    renderElem(boardTasks, getTaskCardHTML(cardText, cardDate, cardTime, classList));
+  // add card black
+  let cardText = `Example default task with default color.`;
+  let cardDate = `23 SEPTEMBER`;
+  let cardTime = `11:15 PM`;
+  let classList = `card--black`;
+  renderElem(boardTasks, getTaskCardHTML(cardText, cardDate, cardTime, classList));
 
-    // add card yellow
-    cardText = `Example default task with custom color and without date.`; 
-    cardDate = ``;
-    cardTime = ``;
-    classList = `card--yellow`
-    renderElem(boardTasks, getTaskCardHTML(cardText, cardDate, cardTime, classList));
+  // add card blue
+  cardText = `Example default task with custom color.`;
+  cardDate = `23 SEPTEMBER`;
+  cardTime = `11:15 PM`;
+  classList = `card--blue`;
+  renderElem(boardTasks, getTaskCardHTML(cardText, cardDate, cardTime, classList));
 
-    boardSection.append(boardTasks);
+  // add card yellow
+  cardText = `Example default task with custom color and without date.`;
+  cardDate = ``;
+  cardTime = ``;
+  classList = `card--yellow`;
+  renderElem(boardTasks, getTaskCardHTML(cardText, cardDate, cardTime, classList));
+
+  boardSection.append(boardTasks);
 };
 
 main();
