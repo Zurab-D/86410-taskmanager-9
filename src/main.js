@@ -1,3 +1,5 @@
+'use strict';
+
 // get Menu markup
 const getMenuHTML = function () {
   return `<section class="control__btn-wrap">
@@ -194,6 +196,7 @@ const getTaskCardHTML = function (cardText, cardDate, cardTime, classList) {
 };
 
 // get Task Edit Form markup
+/* have commented just not to annoy Travis
 const getTaskEditFormHTML = function (cardText, cardDate) {
   return `<article class="card card--edit card--yellow card--repeat">
     <form class="card__form" method="get">
@@ -463,31 +466,34 @@ const getTaskEditFormHTML = function (cardText, cardDate) {
     </form>
   </article>`;
 };
+*/
 
 // get Load More button markup
+/* have commented just not to annoy Travis
 const getLoadMoreHTML = function () {
   return `<button class="load-more" type="button">load more</button>`;
 };
+*/
 
 const renderElem = function (elem, htmlCode) {
   elem.innerHTML = elem.innerHTML + htmlCode;
 };
 
 const main = function () {
-  const main = document.querySelector(`main.main`);
-  mainControl = main.querySelector(`.main__control`);
+  const mainElem = document.querySelector(`main.main`);
+  const mainControl = mainElem.querySelector(`.main__control`);
 
   // menu
   renderElem(mainControl, getMenuHTML());
   // search
-  renderElem(main, getSearchHTML());
+  renderElem(mainElem, getSearchHTML());
   // filters
-  renderElem(main, getFiltersHTML());
+  renderElem(mainElem, getFiltersHTML());
 
   // create board section
   const boardSection = document.createElement(`section`);
   boardSection.className = `board container`;
-  main.append(boardSection);
+  mainElem.append(boardSection);
 
   // sort list
   renderElem(boardSection, getSortByHTML());
