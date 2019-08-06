@@ -475,7 +475,7 @@ const renderElem = function (elem, htmlCode) {
   elem.innerHTML = elem.innerHTML + htmlCode;
 };
 
-const main = function () {
+(function () {
   const mainElem = document.querySelector(`.main`);
   const mainControl = mainElem.querySelector(`.main__control`);
 
@@ -498,6 +498,7 @@ const main = function () {
   const boardTasks = document.createElement(`div`);
   boardTasks.className = `board__tasks`;
 
+  // tsks list
   const tsks = [
     {
       cardText: `Example default task with default color.`,
@@ -519,11 +520,11 @@ const main = function () {
     },
   ];
 
+  // render tasks
   for (const task of tsks) {
     renderElem(boardTasks, getTaskCardHTML(task.cardText, task.cardDate, task.cardTime, task.classList));
   };
 
+  // append tasks to the board
   boardSection.append(boardTasks);
-};
-
-main();
+})();
