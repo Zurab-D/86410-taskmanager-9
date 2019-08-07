@@ -479,22 +479,11 @@ const renderElem = function (elem, htmlCode) {
   const mainElem = document.querySelector(`.main`);
   const mainControl = mainElem.querySelector(`.main__control`);
 
-  // menu
-  renderElem(mainControl, getMenuHTML());
-  // search
-  renderElem(mainElem, getSearchHTML());
-  // filters
-  renderElem(mainElem, getFiltersHTML());
-
   // create board section
   const boardSection = document.createElement(`section`);
   boardSection.className = `board container`;
-  mainElem.append(boardSection);
 
-  // sort list
-  renderElem(boardSection, getSortByHTML());
-
-  // create board__tasks
+  // create .board__tasks
   const boardTasks = document.createElement(`div`);
   boardTasks.className = `board__tasks`;
 
@@ -520,6 +509,18 @@ const renderElem = function (elem, htmlCode) {
     },
   ];
 
+  // menu
+  renderElem(mainControl, getMenuHTML());
+
+  // search
+  renderElem(mainElem, getSearchHTML());
+
+  // filters
+  renderElem(mainElem, getFiltersHTML());
+
+  // sort list
+  renderElem(boardSection, getSortByHTML());
+
   // render tasks
   for (const task of tsks) {
     renderElem(boardTasks, getTaskCardHTML(task.cardText, task.cardDate, task.cardTime, task.classList));
@@ -527,4 +528,7 @@ const renderElem = function (elem, htmlCode) {
 
   // append tasks to the board
   boardSection.append(boardTasks);
+
+  // append board to the main element
+  mainElem.append(boardSection);
 })();
