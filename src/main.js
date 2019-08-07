@@ -525,9 +525,9 @@ const renderElem = function (elem, htmlCode) {
   renderElem(boardTasks, getTaskEditFormHTML(`Here is a card with filled data`, `23 SEPTEMBER 11:15 PM`));
 
   // render tasks
-  for (const task of tsks) {
+  tsks.forEach(task => {
     renderElem(boardTasks, getTaskCardHTML(task.cardText, task.cardDate, task.cardTime, task.classList));
-  }
+  });
 
   // append tasks to the board
   boardSection.append(boardTasks);
