@@ -521,6 +521,9 @@ const renderElem = function (elem, htmlCode) {
   // sort list
   renderElem(boardSection, getSortByHTML());
 
+  // edit form
+  renderElem(boardTasks, getTaskEditFormHTML(`Here is a card with filled data`, `23 SEPTEMBER 11:15 PM`));
+
   // render tasks
   for (const task of tsks) {
     renderElem(boardTasks, getTaskCardHTML(task.cardText, task.cardDate, task.cardTime, task.classList));
@@ -528,6 +531,9 @@ const renderElem = function (elem, htmlCode) {
 
   // append tasks to the board
   boardSection.append(boardTasks);
+
+  // render Load More button
+  renderElem(boardSection, getLoadMoreHTML());
 
   // append board to the main element
   mainElem.append(boardSection);
