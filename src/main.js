@@ -524,7 +524,7 @@ const renderElem = function (elem, htmlCode) {
   // render tasks
   for (const task of tsks) {
     renderElem(boardTasks, getTaskCardHTML(task.cardText, task.cardDate, task.cardTime, task.classList));
-  };
+  }
 
   // append tasks to the board
   boardSection.append(boardTasks);
