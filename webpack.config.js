@@ -1,5 +1,4 @@
 const path = require('path');
-const distPath = path.join(__dirname, '/public');
 
 const config = {
   mode: `development`,
