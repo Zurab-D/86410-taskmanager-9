@@ -1,6 +1,6 @@
 // get Task Card markup
-export const getTaskCardHTML = function (cardText, cardDate, cardTime, classList) {
-  return `<article class="card ${classList}">
+export const getTaskCardHTML = function ({description, dueDate, tags, color}) {
+  return `<article class="card card--${color}">
     <div class="card__form">
       <div class="card__inner">
         <div class="card__control">
@@ -25,7 +25,7 @@ export const getTaskCardHTML = function (cardText, cardDate, cardTime, classList
         </div>
 
         <div class="card__textarea-wrap">
-          <p class="card__text">${cardText}</p>
+          <p class="card__text">${description}</p>
         </div>
 
         <div class="card__settings">
@@ -33,31 +33,19 @@ export const getTaskCardHTML = function (cardText, cardDate, cardTime, classList
             <div class="card__dates">
               <div class="card__date-deadline">
                 <p class="card__input-deadline-wrap">
-                  <span class="card__date">${cardDate}</span>
-                  <span class="card__time">${cardTime}</span>
+                  <span class="card__date">${new Date(dueDate).toDateString()}</span>
+                  <span class="card__time">${new Date(dueDate).toLocaleTimeString()}</span>
                 </p>
               </div>
             </div>
 
             <div class="card__hashtag">
               <div class="card__hashtag-list">
-                <span class="card__hashtag-inner">
+                ${Array.from(tags).map((tag) => `<span class="card__hashtag-inner">
                   <span class="card__hashtag-name">
-                    #todo
+                    #${tag}
                   </span>
-                </span>
-
-                <span class="card__hashtag-inner">
-                  <span class="card__hashtag-name">
-                    #personal
-                  </span>
-                </span>
-
-                <span class="card__hashtag-inner">
-                  <span class="card__hashtag-name">
-                    #important
-                  </span>
-                </span>
+                </span>`).join(``)}
               </div>
             </div>
           </div>
