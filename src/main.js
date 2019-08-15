@@ -39,8 +39,9 @@ const boardTasks = document.createElement(`div`);
 boardTasks.className = `board__tasks`;
 
 // tasks array
-const TASK_COUNT = 3;
+const TASK_COUNT = 16;
 const tasks = new Array(TASK_COUNT).fill(``).map(getTask);
+let curCount = 0;
 
 // menu
 renderElem(mainControl, getMenuHTML());
@@ -55,10 +56,16 @@ renderElem(mainElem, getFiltersHTML(getFilters(tasks)));
 renderElem(boardSection, getSortByHTML());
 
 // edit form
-renderElem(boardTasks, getTaskEditFormHTML(`Here is a card with filled data`, `23 SEPTEMBER 11:15 PM`));
+renderElem(boardTasks, getTaskEditFormHTML(tasks[curCount++]));
 
 // render tasks
-renderElem(boardTasks, tasks.map(getTaskCardHTML).join(``));
+renderElem(boardTasks,
+  tasks.
+    slice(curCount, curCount + 7).
+    map(getTaskCardHTML).
+    join(``)
+);
+curCount += 7;
 
 // append tasks to the board
 boardSection.append(boardTasks);
@@ -68,3 +75,22 @@ renderElem(boardSection, getLoadMoreHTML());
 
 // append board to the main element
 mainElem.append(boardSection);
+
+const btnLoadMore = document.querySelector(`.load-more`);
+btnLoadMore.addEventListener(`click`, () => {
+  // render next 8 tasks
+  renderElem(document.querySelector(`.board__tasks`),
+    tasks.
+      slice(curCount, curCount + 8).
+      map(getTaskCardHTML).
+      join(``)
+  );
+
+  // inc the counter
+  curCount += 8;
+
+  // hide button if all tasks are sown
+  if (curCount >= tasks.length) {
+    btnLoadMore.style.display = `none`;
+  };
+});
