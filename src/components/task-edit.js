@@ -1,6 +1,6 @@
 // get Task Edit Form markup
 export const getTaskEditFormHTML = function ({description, dueDate, tags, color}) {
-  return `<article class="card card--edit card--yellow card--repeat">
+  return `<article class="card card--edit card--${color} card--repeat">
     <form class="card__form" method="get">
       <div class="card__inner">
         <div class="card__control">
@@ -135,8 +135,8 @@ export const getTaskEditFormHTML = function ({description, dueDate, tags, color}
 
             <div class="card__hashtag">
               <div class="card__hashtag-list">
-                ${Array.from(tags).map((tag) => {
-                  `<span class="card__hashtag-inner">
+  ${Array.from(tags).map((tag) =>
+    `<span class="card__hashtag-inner">
                   <input
                     type="hidden"
                     name="hashtag"
@@ -150,7 +150,7 @@ export const getTaskEditFormHTML = function ({description, dueDate, tags, color}
                     delete
                   </button>
                 </span>`
-                })}
+  ).join(``)}
               </div>
 
               <label>

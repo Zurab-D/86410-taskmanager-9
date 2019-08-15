@@ -60,10 +60,10 @@ renderElem(boardTasks, getTaskEditFormHTML(tasks[curCount++]));
 
 // render tasks
 renderElem(boardTasks,
-  tasks.
-    slice(curCount, curCount + 7).
-    map(getTaskCardHTML).
-    join(``)
+    tasks.
+      slice(curCount, curCount + 7).
+      map(getTaskCardHTML).
+      join(``)
 );
 curCount += 7;
 
@@ -80,10 +80,10 @@ const btnLoadMore = document.querySelector(`.load-more`);
 btnLoadMore.addEventListener(`click`, () => {
   // render next 8 tasks
   renderElem(document.querySelector(`.board__tasks`),
-    tasks.
-      slice(curCount, curCount + 8).
-      map(getTaskCardHTML).
-      join(``)
+      tasks.
+        slice(curCount, curCount + 8).
+        map(getTaskCardHTML).
+        join(``)
   );
 
   // inc the counter
@@ -92,5 +92,5 @@ btnLoadMore.addEventListener(`click`, () => {
   // hide button if all tasks are sown
   if (curCount >= tasks.length) {
     btnLoadMore.style.display = `none`;
-  };
+  }
 });
