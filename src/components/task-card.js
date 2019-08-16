@@ -1,6 +1,6 @@
 // get Task Card markup
-export const getTaskCardHTML = function ({description, dueDate, tags, color}) {
-  return `<article class="card card--${color}">
+export const getTaskCardHTML = ({description, dueDate, tags, repeatingDays, color}) => `
+  <article class="card card--${color} ${Object.keys(repeatingDays).some((day) => repeatingDays[day]) ? `card--repeat` : ``}">
     <div class="card__form">
       <div class="card__inner">
         <div class="card__control">
@@ -53,4 +53,3 @@ export const getTaskCardHTML = function ({description, dueDate, tags, color}) {
       </div>
     </div>
   </article>`;
-};

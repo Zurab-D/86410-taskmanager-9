@@ -1,7 +1,7 @@
 // get Filters markup
-export const getFiltersHTML = function (filters) {
-  return `<section class="main__filter filter container">
-    ${Array.from(filters).map((filter) => `
+export const getFiltersHTML = (filters) => `
+  <section class="main__filter filter container">
+    ${filters.map((filter) => `
       <input
         type="radio"
         id="filter__${filter.title.toLowerCase()}"
@@ -12,6 +12,5 @@ export const getFiltersHTML = function (filters) {
       <label for="filter__${filter.title.toLowerCase()}" class="filter__label">
       ${filter.title} <span class="filter__${filter.title.toLowerCase()}-count">${filter.count}</span></label
       >
-    `)}
+    `).join(``)}
 `;
-};
