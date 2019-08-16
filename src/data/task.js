@@ -1,0 +1,35 @@
+export const getTask = () => ({
+  description: [
+    `Изучить теорию`,
+    `Сделать домашку`,
+    `Пройти интенсив на соточку`,
+  ][Math.floor(Math.random() * 3)],
+  dueDate: Date.now() + (Math.floor(Math.random() * 15) - 7) * 24 * 60 * 60 * 1000,
+  tags: new Set([
+    `homework`,
+    `practice`,
+    `intensive`,
+    `keks`,
+    `fun`,
+    `course`,
+    `js`,
+  ].sort(() => 0.5 - Math.random()).slice(0, Math.random() * 3)),
+  repeatingDays: {
+    'Mo': false,
+    'Tu': false,
+    'We': Boolean(Math.round(Math.random()) * 0.5),
+    'Th': false,
+    'Fr': false,
+    'Sa': false,
+    'Su': false,
+  },
+  color: [
+    `black`,
+    `yellow`,
+    `blue`,
+    `green`,
+    `pink`,
+  ][Math.floor(Math.random() * 5)],
+  isFavorite: Boolean(Math.round(Math.random())),
+  isArchive: Boolean(Math.round(Math.random())),
+});

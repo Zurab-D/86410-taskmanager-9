@@ -1,6 +1,6 @@
 // get Task Edit Form markup
-export const getTaskEditFormHTML = function (cardText, cardDate) {
-  return `<article class="card card--edit card--yellow card--repeat">
+export const getTaskEditFormHTML = function ({description, dueDate, tags, color}) {
+  return `<article class="card card--edit card--${color} card--repeat">
     <form class="card__form" method="get">
       <div class="card__inner">
         <div class="card__control">
@@ -27,7 +27,7 @@ export const getTaskEditFormHTML = function (cardText, cardDate) {
               class="card__text"
               placeholder="Start typing your text here..."
               name="text"
-            >${cardText}</textarea>
+            >${description}</textarea>
           </label>
         </div>
 
@@ -45,7 +45,7 @@ export const getTaskEditFormHTML = function (cardText, cardDate) {
                     type="text"
                     placeholder=""
                     name="date"
-                    value="${cardDate}"
+                    value="${new Date(dueDate).toGMTString()}"
                   />
                 </label>
               </fieldset>
@@ -135,50 +135,22 @@ export const getTaskEditFormHTML = function (cardText, cardDate) {
 
             <div class="card__hashtag">
               <div class="card__hashtag-list">
-                <span class="card__hashtag-inner">
+  ${Array.from(tags).map((tag) =>
+    `<span class="card__hashtag-inner">
                   <input
                     type="hidden"
                     name="hashtag"
-                    value="repeat"
+                    value="${tag}"
                     class="card__hashtag-hidden-input"
                   />
                   <p class="card__hashtag-name">
-                    #repeat
+                    #${tag}
                   </p>
                   <button type="button" class="card__hashtag-delete">
                     delete
                   </button>
-                </span>
-
-                <span class="card__hashtag-inner">
-                  <input
-                    type="hidden"
-                    name="hashtag"
-                    value="repeat"
-                    class="card__hashtag-hidden-input"
-                  />
-                  <p class="card__hashtag-name">
-                    #cinema
-                  </p>
-                  <button type="button" class="card__hashtag-delete">
-                    delete
-                  </button>
-                </span>
-
-                <span class="card__hashtag-inner">
-                  <input
-                    type="hidden"
-                    name="hashtag"
-                    value="repeat"
-                    class="card__hashtag-hidden-input"
-                  />
-                  <p class="card__hashtag-name">
-                    #entertaiment
-                  </p>
-                  <button type="button" class="card__hashtag-delete">
-                    delete
-                  </button>
-                </span>
+                </span>`
+  ).join(``)}
               </div>
 
               <label>

@@ -5,7 +5,7 @@ import {getMenuHTML} from './components/menu';
 import {getSearchHTML} from './components/search';
 
 // get Filters markup
-import {getFiltersHTML} from './components/filter';
+import {getFiltersHTML} from './components/filters-bar';
 
 // get sort list markup
 import {getSortByHTML} from './components/sort';
@@ -22,66 +22,75 @@ import {getLoadMoreHTML} from './components/load-more';
 // render eement
 import {renderElem} from './components/render';
 
-(function () {
-  const mainElem = document.querySelector(`.main`);
-  const mainControl = mainElem.querySelector(`.main__control`);
+// getTask function
+import {getTask} from './data/task';
 
-  // create board section
-  const boardSection = document.createElement(`section`);
-  boardSection.className = `board container`;
+import {getFilters} from './data/filter';
 
-  // create .board__tasks
-  const boardTasks = document.createElement(`div`);
-  boardTasks.className = `board__tasks`;
+const mainElem = document.querySelector(`.main`);
+const mainControl = mainElem.querySelector(`.main__control`);
 
-  // tasks list
-  const tasks = [
-    {
-      cardText: `Example default task with default color.`,
-      cardDate: `23 SEPTEMBER`,
-      cardTime: `11:15 PM`,
-      classList: `card--black`
-    },
-    {
-      cardText: `Example default task with custom color.`,
-      cardDate: `23 SEPTEMBER`,
-      cardTime: `11:15 PM`,
-      classList: `card--blue`
-    },
-    {
-      cardText: `Example default task with custom color and without date.`,
-      cardDate: ``,
-      cardTime: ``,
-      classList: `card--yellow`
-    },
-  ];
+// create board section
+const boardSection = document.createElement(`section`);
+boardSection.className = `board container`;
 
-  // menu
-  renderElem(mainControl, getMenuHTML());
+// create .board__tasks
+const boardTasks = document.createElement(`div`);
+boardTasks.className = `board__tasks`;
 
-  // search
-  renderElem(mainElem, getSearchHTML());
+// tasks array
+const TASK_COUNT = 16;
+const tasks = new Array(TASK_COUNT).fill(``).map(getTask);
+let curCount = 0;
 
-  // filters
-  renderElem(mainElem, getFiltersHTML());
+// menu
+renderElem(mainControl, getMenuHTML());
 
-  // sort list
-  renderElem(boardSection, getSortByHTML());
+// search
+renderElem(mainElem, getSearchHTML());
 
-  // edit form
-  renderElem(boardTasks, getTaskEditFormHTML(`Here is a card with filled data`, `23 SEPTEMBER 11:15 PM`));
+// filters
+renderElem(mainElem, getFiltersHTML(getFilters(tasks)));
 
-  // render tasks
-  for (const task of tasks) {
-    renderElem(boardTasks, getTaskCardHTML(task.cardText, task.cardDate, task.cardTime, task.classList));
+// sort list
+renderElem(boardSection, getSortByHTML());
+
+// edit form
+renderElem(boardTasks, getTaskEditFormHTML(tasks[curCount++]));
+
+// render tasks
+renderElem(boardTasks,
+    tasks.
+      slice(curCount, curCount + 7).
+      map(getTaskCardHTML).
+      join(``)
+);
+curCount += 7;
+
+// append tasks to the board
+boardSection.append(boardTasks);
+
+// render Load More button
+renderElem(boardSection, getLoadMoreHTML());
+
+// append board to the main element
+mainElem.append(boardSection);
+
+const btnLoadMore = document.querySelector(`.load-more`);
+btnLoadMore.addEventListener(`click`, () => {
+  // render next 8 tasks
+  renderElem(document.querySelector(`.board__tasks`),
+      tasks.
+        slice(curCount, curCount + 8).
+        map(getTaskCardHTML).
+        join(``)
+  );
+
+  // inc the counter
+  curCount += 8;
+
+  // hide button if all tasks are sown
+  if (curCount >= tasks.length) {
+    btnLoadMore.style.display = `none`;
   }
-
-  // append tasks to the board
-  boardSection.append(boardTasks);
-
-  // render Load More button
-  renderElem(boardSection, getLoadMoreHTML());
-
-  // append board to the main element
-  mainElem.append(boardSection);
-})();
+});
