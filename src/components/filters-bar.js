@@ -32,5 +32,6 @@ export class Filters {
         ${filter.title} <span class="filter__${filter.title.toLowerCase()}-count">${filter.count}</span></label
         >
       `).join(``)}
-  </section>`}
-};
+    </section>`;
+  }
+}

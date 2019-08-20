@@ -27,4 +27,4 @@ export class Search {
       <label class="visually-hidden" for="search__input">Search</label>
     </section>`;
   }
-};
+}

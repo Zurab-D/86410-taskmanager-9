@@ -159,7 +159,7 @@ export class TaskEdit {
               <div class="card__hashtag">
                 <div class="card__hashtag-list">
     ${Array.from(this._tags).map((tag) =>
-      `<span class="card__hashtag-inner">
+    `<span class="card__hashtag-inner">
                     <input
                       type="hidden"
                       name="hashtag"
@@ -173,7 +173,7 @@ export class TaskEdit {
                       delete
                     </button>
                   </span>`
-    ).join(``)}
+  ).join(``)}
                 </div>
 
                 <label>
@@ -263,4 +263,4 @@ export class TaskEdit {
       </form>
     </article>`;
   }
-};
+}
