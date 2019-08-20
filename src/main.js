@@ -14,7 +14,7 @@ import {getSortByHTML} from './components/sort';
 import {getTaskCardHTML} from './components/task-card';
 
 // get Task Edit Form markup
-import {getTaskEditFormHTML} from './components/task-edit';
+// import {getTaskEditFormHTML} from './components/task-edit';
 
 // get Load More button markup
 import {getLoadMoreHTML} from './components/load-more';
@@ -27,15 +27,18 @@ import {getTask} from './data/task';
 
 import {getFilters} from './data/filter';
 
+import {render, Position} from './utils';
+import {TaskCard} from './components/task-card';
+
 const mainElem = document.querySelector(`.main`);
 const mainControl = mainElem.querySelector(`.main__control`);
 
 // create board section
-const boardSection = document.createElement(`section`);
+let boardSection = document.createElement(`section`);
 boardSection.className = `board container`;
 
 // create .board__tasks
-const boardTasks = document.createElement(`div`);
+let boardTasks = document.createElement(`div`);
 boardTasks.className = `board__tasks`;
 
 // tasks array
@@ -56,16 +59,19 @@ renderElem(mainElem, getFiltersHTML(getFilters(tasks)));
 renderElem(boardSection, getSortByHTML());
 
 // edit form
-renderElem(boardTasks, getTaskEditFormHTML(tasks[curCount++]));
+// renderElem(boardTasks, getTaskEditFormHTML(tasks[curCount++]));
 
 // render tasks
-renderElem(boardTasks,
-    tasks.
-      slice(curCount, curCount + 7).
-      map(getTaskCardHTML).
-      join(``)
-);
-curCount += 7;
+const renderTask = (taskMock) => {
+  const taskCard = new TaskCard(taskMock);
+  render(boardTasks, taskCard.getElement(), Position.BEFOREEND);
+};
+
+tasks.
+  slice(curCount, curCount + 8).
+  forEach(renderTask);
+
+curCount += 8;
 
 // append tasks to the board
 boardSection.append(boardTasks);
@@ -75,21 +81,20 @@ renderElem(boardSection, getLoadMoreHTML());
 
 // append board to the main element
 mainElem.append(boardSection);
+boardSection = mainElem.querySelector(`.board`);
+boardTasks = boardSection.querySelector(`.board__tasks`);
 
 const btnLoadMore = document.querySelector(`.load-more`);
 btnLoadMore.addEventListener(`click`, () => {
   // render next 8 tasks
-  renderElem(document.querySelector(`.board__tasks`),
-      tasks.
-        slice(curCount, curCount + 8).
-        map(getTaskCardHTML).
-        join(``)
-  );
+  tasks.
+    slice(curCount, curCount + 8).
+    forEach(renderTask);
 
   // inc the counter
   curCount += 8;
 
-  // hide button if all tasks are sown
+  // hide button if all tasks are shown
   if (curCount >= tasks.length) {
     btnLoadMore.style.display = `none`;
   }
