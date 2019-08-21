@@ -1,95 +1,119 @@
-// get Menu markup
-import {getMenuHTML} from './components/menu';
+// get Menu
+import {Menu} from './components/menu';
 
-// get Serch markup
-import {getSearchHTML} from './components/search';
+// get Serch
+import {Search} from './components/search';
 
-// get Filters markup
-import {getFiltersHTML} from './components/filters-bar';
+// get Filters
+import {Filters} from './components/filters-bar';
 
-// get sort list markup
-import {getSortByHTML} from './components/sort';
+// get sort list
+import {Sort} from './components/sort';
 
-// get Task Card markup
-import {getTaskCardHTML} from './components/task-card';
+// get Task Card
+import {TaskCard} from './components/task-card';
 
-// get Task Edit Form markup
-import {getTaskEditFormHTML} from './components/task-edit';
+// get Task Edit Form
+import {TaskEdit} from './components/task-edit';
 
-// get Load More button markup
-import {getLoadMoreHTML} from './components/load-more';
+// get Load More button
+import {LoadMore} from './components/load-more';
 
-// render eement
-import {renderElem} from './components/render';
-
-// getTask function
+// get data
 import {getTask} from './data/task';
-
 import {getFilters} from './data/filter';
+
+// utils
+import {render, Position} from './utils';
 
 const mainElem = document.querySelector(`.main`);
 const mainControl = mainElem.querySelector(`.main__control`);
 
-// create board section
-const boardSection = document.createElement(`section`);
-boardSection.className = `board container`;
+// board section
+const boardSection = mainElem.querySelector(`.board`);
 
-// create .board__tasks
-const boardTasks = document.createElement(`div`);
-boardTasks.className = `board__tasks`;
+// board__tasks
+const boardTasks = mainElem.querySelector(`.board__tasks`);
 
 // tasks array
 const TASK_COUNT = 16;
 const tasks = new Array(TASK_COUNT).fill(``).map(getTask);
 let curCount = 0;
 
-// menu
-renderElem(mainControl, getMenuHTML());
+// ~~~ render the page ~~~
 
-// search
-renderElem(mainElem, getSearchHTML());
+// menu
+const menu = new Menu();
+render(mainControl, menu.getElement(), Position.beforeEnd);
 
 // filters
-renderElem(mainElem, getFiltersHTML(getFilters(tasks)));
+const filters = new Filters(getFilters(tasks));
+render(mainControl, filters.getElement(), Position.afterEnd);
+
+// search
+const search = new Search();
+render(mainControl, search.getElement(), Position.afterEnd);
 
 // sort list
-renderElem(boardSection, getSortByHTML());
+const sort = new Sort();
+render(boardSection, sort.getElement(), Position.afterBegin);
 
-// edit form
-renderElem(boardTasks, getTaskEditFormHTML(tasks[curCount++]));
+// render task function
+const renderTask = (taskMock) => {
+  const taskCard = new TaskCard(taskMock);
+  const taskEdit = new TaskEdit(taskMock);
 
-// render tasks
-renderElem(boardTasks,
-    tasks.
-      slice(curCount, curCount + 7).
-      map(getTaskCardHTML).
-      join(``)
-);
-curCount += 7;
+  const onEscKeyDown = (evt) => {
+    if (evt.key === `Escape` || evt.key === `Esc`) {
+      boardTasks.replaceChild(taskCard.getElement(), taskEdit.getElement());
+      document.removeEventListener(`keydown`, onEscKeyDown);
+    }
+  };
 
-// append tasks to the board
-boardSection.append(boardTasks);
+  taskCard.getElement().
+    querySelector(`.card__btn--edit`).
+    addEventListener(`click`, () => {
+      boardTasks.replaceChild(taskEdit.getElement(), taskCard.getElement());
+      document.addEventListener(`keydown`, onEscKeyDown);
+    });
+
+  taskEdit.getElement().
+    querySelector(`textarea`).
+      addEventListener(`focus`, () => {
+        document.removeEventListener(`keydown`, onEscKeyDown);
+      });
+
+  taskEdit.getElement().
+    querySelector(`textarea`).
+      addEventListener(`blur`, () => {
+        document.addEventListener(`keydown`, onEscKeyDown);
+      });
+
+  render(boardTasks, taskCard.getElement(), Position.beforeEnd);
+};
+
+tasks.
+  slice(curCount, curCount + 8).
+  forEach(renderTask);
+
+// inc counter
+curCount += 8;
 
 // render Load More button
-renderElem(boardSection, getLoadMoreHTML());
+const loadMore = new LoadMore();
+render(boardSection, loadMore.getElement(), Position.beforeEnd);
 
-// append board to the main element
-mainElem.append(boardSection);
-
-const btnLoadMore = document.querySelector(`.load-more`);
+const btnLoadMore = boardSection.querySelector(`.load-more`);
 btnLoadMore.addEventListener(`click`, () => {
   // render next 8 tasks
-  renderElem(document.querySelector(`.board__tasks`),
-      tasks.
-        slice(curCount, curCount + 8).
-        map(getTaskCardHTML).
-        join(``)
-  );
+  tasks.
+    slice(curCount, curCount + 8).
+    forEach(renderTask);
 
   // inc the counter
   curCount += 8;
 
-  // hide button if all tasks are sown
+  // hide button if all tasks are shown
   if (curCount >= tasks.length) {
     btnLoadMore.style.display = `none`;
   }
