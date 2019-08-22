@@ -19,6 +19,9 @@ import {TaskEdit} from './components/task-edit';
 // get Load More button
 import {LoadMore} from './components/load-more';
 
+// no tasks
+import {NoTasks} from './components/no-tasks';
+
 // get data
 import {getTask} from './data/task';
 import {getFilters} from './data/filter';
@@ -54,10 +57,6 @@ render(mainControl, filters.getElement(), Position.afterEnd);
 const search = new Search();
 render(mainControl, search.getElement(), Position.afterEnd);
 
-// sort list
-const sort = new Sort();
-render(boardSection, sort.getElement(), Position.afterBegin);
-
 // render task function
 const renderTask = (taskMock) => {
   const taskCard = new TaskCard(taskMock);
@@ -92,29 +91,44 @@ const renderTask = (taskMock) => {
   render(boardTasks, taskCard.getElement(), Position.beforeEnd);
 };
 
-tasks.
-  slice(curCount, curCount + 8).
-  forEach(renderTask);
 
-// inc counter
-curCount += 8;
+const renderAllTasks = () => {
+  boardTasks.innerHTML = ``;
+  if (tasks.length) {
+    tasks.
+      slice(curCount, curCount + 8).
+      forEach(renderTask);
 
-// render Load More button
-const loadMore = new LoadMore();
-render(boardSection, loadMore.getElement(), Position.beforeEnd);
+    // inc counter
+    curCount += 8;
 
-const btnLoadMore = boardSection.querySelector(`.load-more`);
-btnLoadMore.addEventListener(`click`, () => {
-  // render next 8 tasks
-  tasks.
-    slice(curCount, curCount + 8).
-    forEach(renderTask);
+    // sort list
+    const sort = new Sort();
+    render(boardSection, sort.getElement(), Position.afterBegin);
 
-  // inc the counter
-  curCount += 8;
+    // render Load More button
+    const loadMore = new LoadMore();
+    render(boardSection, loadMore.getElement(), Position.beforeEnd);
 
-  // hide button if all tasks are shown
-  if (curCount >= tasks.length) {
-    btnLoadMore.style.display = `none`;
+    const btnLoadMore = boardSection.querySelector(`.load-more`);
+    btnLoadMore.addEventListener(`click`, () => {
+      // render next 8 tasks
+      tasks.
+        slice(curCount, curCount + 8).
+        forEach(renderTask);
+
+      // inc the counter
+      curCount += 8;
+
+      // hide button if all tasks are shown
+      if (curCount >= tasks.length) {
+        btnLoadMore.style.display = `none`;
+      }
+    });
+
+  } else {
+    render(boardTasks, (new NoTasks()).getElement(), Position.beforeBegin);
   }
-});
+};
+
+renderAllTasks();

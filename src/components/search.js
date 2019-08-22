@@ -2,7 +2,9 @@ import {createElement} from '../utils';
 
 // get Serch markup
 export class Search {
-  constructor() {}
+  constructor() {
+    this._element = null;
+  }
 
   getElement() {
     if (!this._element) {

@@ -8,6 +8,7 @@ export class TaskEdit {
     this._tags = tags;
     this._repeatingDays = repeatingDays;
     this._color = color;
+    this._element = null;
   }
 
   getElement() {
@@ -23,7 +24,7 @@ export class TaskEdit {
   }
 
   getTemplate() {
-    return `<article class="card card--edit card--${this._color} card--repeat">
+    return `<article class="card card--edit card--${this._color} ${Object.keys(this._repeatingDays).some((day) => this._repeatingDays[day]) ? `card--repeat` : ``}">
       <form class="card__form" method="get">
         <div class="card__inner">
           <div class="card__control">

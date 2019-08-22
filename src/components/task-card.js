@@ -8,6 +8,7 @@ export class TaskCard {
     this._tags = tags;
     this._repeatingDays = repeatingDays;
     this._color = color;
+    this._element = null;
   }
 
   getElement() {

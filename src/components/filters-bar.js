@@ -4,6 +4,7 @@ import {createElement} from '../utils';
 export class Filters {
   constructor(filters) {
     this._filters = filters;
+    this._element = null;
   }
 
   getElement() {
