@@ -1,7 +1,7 @@
 import {createElement} from '../utils';
 
-// get Load More button markup
-export class LoadMore {
+// get sort list markup
+export class NoTasks {
   constructor() {
     this._element = null;
   }
@@ -19,6 +19,10 @@ export class LoadMore {
   }
 
   getTemplate() {
-    return `<button class="load-more" type="button">load more</button>`;
+    return `<p class="board__no-tasks">
+      Congratulations, all tasks were completed! To create a new click on
+      «add new task» button.
+    </p>`;
   }
 }
+

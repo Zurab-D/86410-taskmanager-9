@@ -2,7 +2,9 @@ import {createElement} from '../utils';
 
 // get Menu markup
 export class Menu {
-  constructor() {}
+  constructor() {
+    this._element = null;
+  }
 
   getElement() {
     if (!this._element) {

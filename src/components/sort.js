@@ -2,7 +2,9 @@ import {createElement} from '../utils';
 
 // get sort list markup
 export class Sort {
-  constructor() {}
+  constructor() {
+    this._element = null;
+  }
 
   getElement() {
     if (!this._element) {
