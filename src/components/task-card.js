@@ -1,26 +1,14 @@
-import {createElement} from '../utils';
+import {AbstractComponent} from './AbstractComponent';
 
 // Task Card
-export class TaskCard {
+export class TaskCard extends AbstractComponent {
   constructor({description, dueDate, tags, repeatingDays, color}) {
+    super();
     this._description = description;
     this._dueDate = dueDate;
     this._tags = tags;
     this._repeatingDays = repeatingDays;
     this._color = color;
-    this._element = null;
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 
   getTemplate() {

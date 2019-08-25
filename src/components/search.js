@@ -1,21 +1,9 @@
-import {createElement} from '../utils';
+import {AbstractComponent} from './AbstractComponent';
 
 // get Serch markup
-export class Search {
+export class Search extends AbstractComponent {
   constructor() {
-    this._element = null;
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
+    super();
   }
 
   getTemplate() {
